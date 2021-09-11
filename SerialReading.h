@@ -184,6 +184,15 @@ bool controlRobot(char input[], int inputSize){
         Serial.println("\tM :[X Data]:[Y Data]:[Z Data]:[A Data]: - Move ALL motors needs all data every time and ':'");
         Serial.println("\tPERAMERTERS:\n\tData - int for the amount for each motor to move\n");
         Serial.println("\tG [Dir] [Data]; - Group Move (Move the end effector)\n\tPERAMERTERS:\n\tDir - Direction to move\n\t\tU - Up\n\t\tD - Down\n\t\tL - Left\n\t\tR - Right\n\t\tI - In\n\t\tO - Out\n\tData - int for the amount for each motor to move\n");
+        Serial.println("\tS [Data]; = Set speed for all motors\n\tPERAMERTERS:\n\tData - int for the speed\n");
+      break;
+      case 'S':
+        data = extractMotorCommandData(2, ';');
+        Serial.print("Set all motors to:\t"); Serial.println(data);
+        stepperX.setMaxSpeed(data);
+        stepperY.setMaxSpeed(data);
+        stepperZ.setMaxSpeed(data);
+        stepperA.setMaxSpeed(data);
       break;
       case 'G':
         data = extractMotorCommandData(4, ';');
@@ -224,6 +233,7 @@ bool controlRobot(char input[], int inputSize){
       Serial.println("Unknown command try '?'");
       break;
     }
+    buf[0] = '\0';
     return true;
   }
 
